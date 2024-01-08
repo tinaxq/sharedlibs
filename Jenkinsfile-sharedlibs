@@ -1,0 +1,46 @@
+@Library('shared-lib-demo') _
+// Uses Declarative syntax to run commands inside a container.
+pipeline {
+    agent {
+        label 'kubeagent'
+        // kubernetes {
+            // Rather than inline YAML, in a multibranch Pipeline you could use: yamlFile 'jenkins-pod.yaml'
+            // Or, to avoid YAML:
+            // containerTemplate {
+            //     name 'shell'
+            //     image 'ubuntu'
+            //     command 'sleep'
+            //     args 'infinity'
+            // }
+//             yaml '''
+// apiVersion: v1
+// kind: Pod
+// spec:
+//   containers:
+//   - name: shell
+//     image: ubuntu
+//     command:
+//     - sleep
+//     args:
+//     - infinity
+// '''
+            // Can also wrap individual steps:
+            // container('shell') {
+            //     sh 'hostname'
+            // }
+            // defaultContainer 'shell'
+        // }
+    }
+    stages {
+        stage('Demo') {
+            steps {
+                welcome("Tina Xiao")
+                welcome("Qing Xiao")
+                script {
+                    caculator.add(1, 7)
+                    caculator.mul(1, 7)
+                }
+            }
+        }
+    }
+}
